@@ -25,6 +25,8 @@ for arg in "$@"; do
 done
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Build the engine here even if Cargo is set to build somewhere else.
+export CARGO_TARGET_DIR="$ROOT/target"
 APP="$ROOT/apps/where_flutter"
 VERSION="$(sed -n 's/^version = "\(.*\)"/\1/p' "$ROOT/Cargo.toml" | head -1)"
 ORG="com.crowncorestudios"
@@ -136,6 +138,7 @@ if [[ "$OS" == linux ]]; then
   cp "$ENGINE" "$OUT/lib/"
   rm -rf "$OUT/browser-extension"
   cp -R "$ROOT/browser-extension" "$OUT/browser-extension"
+  cp "$ROOT/LICENSE" "$ROOT/NOTICE" "$OUT/"
   cp "$ROOT/assets/icon/where-512.png" "$OUT/where.png"
   APP_PATH="$OUT/Where"
 else
@@ -145,6 +148,7 @@ else
   cp "$ENGINE" "$OUT/Contents/Frameworks/"
   rm -rf "$OUT/Contents/Resources/browser-extension"
   cp -R "$ROOT/browser-extension" "$OUT/Contents/Resources/browser-extension"
+  cp "$ROOT/LICENSE" "$ROOT/NOTICE" "$OUT/Contents/Resources/"
   # Re-sign after adding files. "-" = ad-hoc: runs on this Mac; downloads
   # still need right-click > Open until the app is notarized.
   codesign --force --deep --sign - "$OUT" >/dev/null 2>&1 || say "!! Could not sign the app (it may still run)"

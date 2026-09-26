@@ -34,6 +34,10 @@ set "FLUTTER_HOME=%TOOLS%\flutter"
 set "LOG=%TOOLS%\setup-log.txt"
 set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
 set "PATH=%USERPROFILE%\.cargo\bin;%FLUTTER_HOME%\bin;%ProgramFiles%\Git\cmd;%PATH%"
+rem Build the engine into this folder, even if Cargo is set up to put
+rem builds somewhere else (CARGO_TARGET_DIR or a global Cargo config).
+set "CARGO_TARGET_DIR=%ROOT%target"
+set "ENGINE_DIR=%ROOT%target\release"
 set "ARCH=x64"
 if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" set "ARCH=arm64"
 set "EXE_DIR=%APP%\build\windows\%ARCH%\runner\Release"
@@ -169,8 +173,29 @@ rem ================================================================ build ====
 :build_core
 call :work "Compiling - the first build takes a few minutes, later ones seconds..."
 cargo build --release -p where_ffi -p where_cli >> "%LOG%" 2>&1 || (call :err "The engine didn't build." & exit /b 1)
+call :find_engine
+if not exist "%ENGINE_DIR%\where_ffi.dll" (
+  call :err "The engine built, but where_ffi.dll isn't in %ROOT%target."
+  call :note "Cargo may be set to build for another target - check .cargo\config.toml in your user folder."
+  exit /b 1
+)
 call :ok "Search engine ready"
 exit /b 0
+
+:find_engine
+rem Normally target\release. If Cargo builds for a fixed target (e.g. a
+rem global build.target setting), it's target\<target-name>\release.
+if exist "%ROOT%target\release\where_ffi.dll" (set "ENGINE_DIR=%ROOT%target\release" & exit /b 0)
+for /d %%D in ("%ROOT%target\*") do if exist "%%~D\release\where_ffi.dll" set "ENGINE_DIR=%%~D\release"
+exit /b 0
+
+:place_engine
+rem Antivirus can hold a freshly built file for a moment, so retry.
+for %%N in (1 2 3 4 5) do (
+  copy /y "%ENGINE_DIR%\where_ffi.dll" "%EXE_DIR%\" >> "%LOG%" 2>&1 && exit /b 0
+  timeout /t 2 >nul
+)
+exit /b 1
 
 :build_app
 pushd "%APP%"
@@ -204,7 +229,21 @@ if not exist "%EXE%" (
   call :err "The app built but Where.exe wasn't where it should be."
   exit /b 1
 )
-copy /y "%ROOT%target\release\where_ffi.dll" "%EXE_DIR%\" >nul || (call :err "Couldn't place where_ffi.dll next to the app." & exit /b 1)
+call :find_engine
+call :close_running_app
+call :place_engine
+if errorlevel 1 (
+  if exist "%EXE_DIR%\where_ffi.dll" (
+    call :warn "Couldn't update where_ffi.dll (something is using it) - using the copy already there."
+  ) else (
+    call :err "Couldn't place where_ffi.dll next to the app."
+    call :note "From: %ENGINE_DIR%"
+    call :note "To:   %EXE_DIR%"
+    call :note "If antivirus quarantined it, allow the Where folder and run this again."
+    exit /b 1
+  )
+)
+if exist "%ENGINE_DIR%\where-cli.exe" copy /y "%ENGINE_DIR%\where-cli.exe" "%EXE_DIR%\" >nul 2>&1
 rem The browser extension lives next to the app so Settings can point to it.
 if exist "%ROOT%browser-extension\manifest.json" xcopy "%ROOT%browser-extension" "%EXE_DIR%\browser-extension\" /e /i /y /q >nul 2>&1
 call :ok "App ready"
@@ -259,11 +298,13 @@ call :note "Copy the error above and send it over so the app can be fixed."
 echo.
 
 :run_cli
-if not exist "%ROOT%target\release\where-cli.exe" (
+call :find_engine
+if not exist "%ENGINE_DIR%\where-cli.exe" (
   call :work "Building the command-line version..."
   cargo build --release -p where_cli >> "%LOG%" 2>&1 || goto :fail
+  call :find_engine
 )
-set "PATH=%ROOT%target\release;%PATH%"
+set "PATH=%ENGINE_DIR%;%PATH%"
 echo.
 echo   %C_HEAD%Where command line is ready.%C_END% Try:
 echo     %C_ACC%where-cli demo --db "%TEMP%\where-demo.db"%C_END%

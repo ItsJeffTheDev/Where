@@ -93,8 +93,12 @@ if (Test-Path (Join-Path $WinOut 'Where.exe')) {
     Start-Sleep -Seconds 2
   }
   foreach ($name in 'where_ffi.dll', 'where-cli.exe') {
-    $src = Join-Path $Root "target\release\$name"
-    if (-not (Test-Path $src)) { continue }
+    # Usually target\release; target\<target-name>\release if Cargo builds
+    # for a fixed target.
+    $src = Get-ChildItem -Path (Join-Path $Root 'target') -Filter $name -Recurse -Depth 2 -ErrorAction SilentlyContinue |
+      Where-Object { $_.Directory.Name -eq 'release' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    if (-not $src) { continue }
+    $src = $src.FullName
     try { Copy-Item $src $WinOut -Force -ErrorAction Stop }
     catch { Warn "Couldn't update $name (in use?) - using the copy already next to Where.exe." }
   }
@@ -107,6 +111,7 @@ if (Test-Path (Join-Path $WinOut 'Where.exe')) {
   $ext = Join-Path $WinOut 'browser-extension'
   if (Test-Path $ext) { Remove-Item -Recurse -Force $ext }
   Copy-Item -Recurse (Join-Path $Root 'browser-extension') $ext
+  foreach ($doc in 'LICENSE', 'NOTICE') { Copy-Item (Join-Path $Root $doc) $WinOut -Force }
 
   $stage = Join-Path $Temp 'Where'
   Copy-Item -Recurse $WinOut $stage

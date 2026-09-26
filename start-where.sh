@@ -14,6 +14,8 @@
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Build the engine here even if Cargo is set to build somewhere else.
+export CARGO_TARGET_DIR="$ROOT/target"
 TOOLS="$HOME/.where-tools"
 FLUTTER_HOME="$TOOLS/flutter"
 LOG="$TOOLS/setup-log.txt"
