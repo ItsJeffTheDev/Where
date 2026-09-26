@@ -190,11 +190,11 @@ build_deb() {
 Package: where
 Version: $VERSION
 Architecture: $debarch
-Maintainer: CodingJeffRoblox <CodingJeffRoblox@users.noreply.github.com>
+Maintainer: ItsJeffTheDev <ItsJeffTheDev@users.noreply.github.com>
 Depends: libgtk-3-0 | libgtk-3-0t64
 Section: utils
 Priority: optional
-Homepage: https://github.com/CodingJeffRoblox/Where
+Homepage: https://github.com/ItsJeffTheDev/Where
 Description: Find what you're looking for
  Where connects your files, notes, tasks, projects and saved links in one
  private, offline search. Nothing leaves your computer.

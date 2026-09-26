@@ -8,7 +8,7 @@
 2. If it still fails, look at the last lines of the log:
    `%LOCALAPPDATA%\where-tools\setup-log.txt` (Windows) or
    `~/.where-tools/setup-log.txt` (Mac, Linux).
-3. Open an [issue](https://github.com/CodingJeffRoblox/Where/issues/new/choose)
+3. Open an [issue](https://github.com/ItsJeffTheDev/Where/issues/new/choose)
    with those lines. **Check them for private information first** (names,
    paths, emails) and replace anything you don't want to share.
 

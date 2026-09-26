@@ -10,7 +10,7 @@ Your files, notes, tasks and projects, connected and searchable in one place.
 Local-first. Private by default. No account needed.
 
 [![Version](https://img.shields.io/badge/version-0.4.0_alpha-4F5BD5)](CHANGELOG.md)
-[![CI](https://github.com/CodingJeffRoblox/Where/actions/workflows/ci.yml/badge.svg)](https://github.com/CodingJeffRoblox/Where/actions/workflows/ci.yml)
+[![CI](https://github.com/ItsJeffTheDev/Where/actions/workflows/ci.yml/badge.svg)](https://github.com/ItsJeffTheDev/Where/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-Windows_%7C_macOS_%7C_Linux-0078D6)
 ![Rust](https://img.shields.io/badge/core-Rust-B7410E)
 ![Flutter](https://img.shields.io/badge/app-Flutter-02569B)
@@ -63,7 +63,7 @@ with **your real files**, fully offline. See
 ## Download
 
 Get the file for your computer from the
-[latest release](https://github.com/CodingJeffRoblox/Where/releases/latest):
+[latest release](https://github.com/ItsJeffTheDev/Where/releases/latest):
 
 | Your computer | Download | Then |
 |---|---|---|

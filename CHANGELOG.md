@@ -150,8 +150,8 @@ that connects your projects, tasks, notes and files.
 - No sync, accounts, AI or activity tracking (all by design for now).
 - Windows only for the desktop app; macOS and Linux come later (added in 0.3.0).
 
-[Unreleased]: https://github.com/CodingJeffRoblox/Where/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/CodingJeffRoblox/Where/releases/tag/v0.4.0
-[0.3.0]: https://github.com/CodingJeffRoblox/Where/releases/tag/v0.3.0
-[0.2.0]: https://github.com/CodingJeffRoblox/Where/releases/tag/v0.2.0
-[0.1.0]: https://github.com/CodingJeffRoblox/Where/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ItsJeffTheDev/Where/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.4.0
+[0.3.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.3.0
+[0.2.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.2.0
+[0.1.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.1.0

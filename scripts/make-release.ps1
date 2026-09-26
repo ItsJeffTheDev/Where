@@ -66,7 +66,7 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
 }
 gh auth status 2>$null | Out-Null
 if ($LASTEXITCODE -ne 0) {
-  Work "Sign in to GitHub (use the CodingJeffRoblox account)..."
+  Work "Sign in to GitHub (use the ItsJeffTheDev account)..."
   gh auth login --web --git-protocol https
   if ($LASTEXITCODE -ne 0) { Fail "GitHub sign-in didn't finish." }
 }
@@ -244,5 +244,5 @@ if ($LASTEXITCODE -eq 0) {
 }
 
 Remove-Item -Recurse -Force $Temp -ErrorAction SilentlyContinue
-Ok "Published: https://github.com/CodingJeffRoblox/Where/releases/tag/$Tag"
+Ok "Published: https://github.com/ItsJeffTheDev/Where/releases/tag/$Tag"
 gh release view $Tag --web | Out-Null
