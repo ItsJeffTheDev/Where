@@ -39,8 +39,6 @@ jobs:
   flutter:
     name: Flutter analyze
     runs-on: ubuntu-latest
-    # Non-blocking until the first green run; see docs/adr/0003.
-    continue-on-error: true
     defaults:
       run:
         working-directory: apps/where_flutter

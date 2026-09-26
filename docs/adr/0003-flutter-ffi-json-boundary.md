@@ -16,4 +16,5 @@ JSON strings. Dart wraps them in `lib/src/where_core.dart`.
 - − JSON encode/decode per call; calls are synchronous on the UI isolate.
   Fine for search on small indexes; move indexing to a background isolate
   or adopt flutter_rust_bridge if profiling says so.
-- The Flutter CI job is non-blocking until its first green run.
+- The Flutter CI job was non-blocking until its first green run (425e821,
+  2026-09-26); it now blocks merges like the Rust jobs.
