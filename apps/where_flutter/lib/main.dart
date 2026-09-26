@@ -42,10 +42,12 @@ class _WhereRootState extends State<WhereRoot> {
   }
 
   void _set(String step, double progress) {
-    if (mounted) setState(() {
-      _step = step;
-      _progress = progress;
-    });
+    if (mounted) {
+      setState(() {
+        _step = step;
+        _progress = progress;
+      });
+    }
   }
 
   // Lets the loading screen paint between steps.

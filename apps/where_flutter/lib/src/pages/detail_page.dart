@@ -23,9 +23,9 @@ class DetailPage extends StatelessWidget {
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: detail == null
-          ? Column(children: [
-              const _TopBar(),
-              const Expanded(
+          ? const Column(children: [
+              _TopBar(),
+              Expanded(
                 child: EmptyState(
                   icon: Icons.delete_outline,
                   title: 'This item is gone',

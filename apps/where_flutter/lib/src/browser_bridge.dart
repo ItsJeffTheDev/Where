@@ -54,13 +54,13 @@ class BrowserBridge {
     try {
       final origin = req.headers.value('origin');
       if (origin != null && !_isExtensionOrigin(origin)) {
-        return _send(res, 403, {'error': 'Only the Where browser extension can talk to Where.'});
+        return await _send(res, 403, {'error': 'Only the Where browser extension can talk to Where.'});
       }
       final path = req.uri.path;
       final method = req.method;
 
       if (method == 'GET' && path == '/v1/status') {
-        return _send(res, 200, {'app': 'Where', 'version': version, 'connected': _authorized(req)});
+        return await _send(res, 200, {'app': 'Where', 'version': version, 'connected': _authorized(req)});
       }
 
       if (method == 'POST' && path == '/v1/pair') {
@@ -68,18 +68,18 @@ class BrowserBridge {
         final client = _clean(body['client'] as String?, 40, fallback: 'Your browser');
         final token = await state.requestBrowserPairing(client);
         if (token == null) {
-          return _send(res, 403, {'error': 'The connection was declined in Where.'});
+          return await _send(res, 403, {'error': 'The connection was declined in Where.'});
         }
-        return _send(res, 200, {'token': token});
+        return await _send(res, 200, {'token': token});
       }
 
       if (!_authorized(req)) {
-        return _send(res, 401, {'error': 'Not connected yet. Click Connect in the extension.'});
+        return await _send(res, 401, {'error': 'Not connected yet. Click Connect in the extension.'});
       }
 
       if (method == 'GET' && path == '/v1/projects') {
         final projects = state.list('project');
-        return _send(res, 200, {
+        return await _send(res, 200, {
           'projects': [
             for (final p in projects) {'id': p.id, 'title': p.title},
           ],
@@ -89,10 +89,10 @@ class BrowserBridge {
       if (method == 'GET' && path == '/v1/links/lookup') {
         final url = req.uri.queryParameters['url'] ?? '';
         final link = LinkInfo.isWebUrl(url) ? state.findLink(url) : null;
-        if (link == null) return _send(res, 200, {'link': null});
+        if (link == null) return await _send(res, 200, {'link': null});
         final detail = state.detail(link.id);
         final project = detail?.parents.where((p) => p.kind == 'project').toList() ?? const <WObject>[];
-        return _send(res, 200, {
+        return await _send(res, 200, {
           'link': {
             'id': link.id,
             'title': link.title,
@@ -106,7 +106,7 @@ class BrowserBridge {
         final body = await _json(req);
         final url = (body['url'] as String? ?? '').trim();
         if (!LinkInfo.isWebUrl(url)) {
-          return _send(res, 400, {'error': 'Only web pages (http or https) can be saved.'});
+          return await _send(res, 400, {'error': 'Only web pages (http or https) can be saved.'});
         }
         final projectId = body['project_id'] as String?;
         final link = state.saveLink(
@@ -117,16 +117,16 @@ class BrowserBridge {
           source: _clean(body['client'] as String?, 40, fallback: 'Browser'),
         );
         state.toast('Saved from your browser: ${link.title}');
-        return _send(res, 200, {'id': link.id, 'title': link.title});
+        return await _send(res, 200, {'id': link.id, 'title': link.title});
       }
 
-      return _send(res, 404, {'error': 'Unknown request.'});
+      return await _send(res, 404, {'error': 'Unknown request.'});
     } on WhereException catch (e) {
-      return _send(res, 400, {'error': e.message});
+      return await _send(res, 400, {'error': e.message});
     } on FormatException {
-      return _send(res, 400, {'error': 'That request wasn’t valid.'});
+      return await _send(res, 400, {'error': 'That request wasn’t valid.'});
     } catch (e) {
-      return _send(res, 500, {'error': 'Something went wrong in Where: $e'});
+      return await _send(res, 500, {'error': 'Something went wrong in Where: $e'});
     }
   }
 

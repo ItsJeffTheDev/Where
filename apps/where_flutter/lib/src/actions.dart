@@ -189,7 +189,7 @@ Future<WObject?> showAddLinkDialog(BuildContext context, {WObject? project, Stri
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String?>(
-                value: projectId,
+                initialValue: projectId,
                 decoration: const InputDecoration(labelText: 'Project'),
                 items: [
                   const DropdownMenuItem<String?>(value: null, child: Text('No project')),
