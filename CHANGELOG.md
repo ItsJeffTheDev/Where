@@ -6,12 +6,25 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-Planned next — see the Notion roadmap:
+## [0.7.0] — 2026-09-26 · Governance, CI hardening and macOS licence fix
 
-- First green Windows build of the desktop app in CI
-- Search speed benchmark (100k objects, p95 < 50 ms)
-- Global shortcut (Ctrl+Space) to open Where from anywhere
-- Linking notes to files and people
+### Added
+- **GOVERNANCE.md**: documents maintainers, the contribution model, licensing of
+  contributions (inbound = outbound, Apache 2.0, no CLA), ADR policy and the
+  release process. Referenced by the open-source licence decision (ADR-8).
+
+### Fixed
+- **macOS copyright string**: the `PRODUCT_COPYRIGHT` field in
+  `macos/Runner/Configs/AppInfo.xcconfig` now reads
+  *"Licensed under the Apache License, Version 2.0."* instead of
+  *"All rights reserved."*, which was inconsistent with the Apache 2.0 licence.
+
+### Changed
+- **CI runners pinned to `ubuntu-24.04`**: all jobs that previously used
+  `ubuntu-latest` (`rust` matrix, `flutter`, `extension`, `release`) are now
+  pinned to `ubuntu-24.04`. GitHub is moving `ubuntu-latest` to Ubuntu 26 in
+  October 2026; pinning avoids a surprise breakage before the transition is
+  tested.
 
 ## [0.4.0] — 2026-09-25 · Loading screen and ready-to-run downloads
 
@@ -150,7 +163,8 @@ that connects your projects, tasks, notes and files.
 - No sync, accounts, AI or activity tracking (all by design for now).
 - Windows only for the desktop app; macOS and Linux come later (added in 0.3.0).
 
-[Unreleased]: https://github.com/ItsJeffTheDev/Where/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/ItsJeffTheDev/Where/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/ItsJeffTheDev/Where/compare/v0.4.0...v0.7.0
 [0.4.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.4.0
 [0.3.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ItsJeffTheDev/Where/releases/tag/v0.2.0

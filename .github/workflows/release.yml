@@ -137,7 +137,8 @@ jobs:
 
   extension:
     name: Browser extension
-    runs-on: ubuntu-latest
+    # ubuntu-latest moves to Ubuntu 26 in Oct 2026; pin to 24.04 until tested.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - name: Zip extension
@@ -154,7 +155,7 @@ jobs:
     name: Publish release
     if: startsWith(github.ref, 'refs/tags/v') && !cancelled()
     needs: [windows, macos, linux, extension]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:

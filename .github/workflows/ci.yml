@@ -23,7 +23,8 @@ jobs:
       fail-fast: false
       matrix:
         # Windows first: it's the alpha platform (spec §37).
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        # ubuntu-latest moves to Ubuntu 26 in Oct 2026; pin to 24.04 until tested.
+        os: [windows-latest, macos-latest, ubuntu-24.04]
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -38,7 +39,7 @@ jobs:
 
   flutter:
     name: Flutter analyze
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/where_flutter

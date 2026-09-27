@@ -85,7 +85,7 @@ else
   CFG="macos/Runner/Configs/AppInfo.xcconfig"
   edit 's/^PRODUCT_NAME = .*/PRODUCT_NAME = Where/' "$CFG"
   edit "s/^PRODUCT_BUNDLE_IDENTIFIER = .*/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE_ID/" "$CFG"
-  edit 's/^PRODUCT_COPYRIGHT = .*/PRODUCT_COPYRIGHT = Copyright © 2026 CrownCore Studios. All rights reserved./' "$CFG"
+  edit 's/^PRODUCT_COPYRIGHT = .*/PRODUCT_COPYRIGHT = Copyright © 2026 CrownCore Studios. Licensed under the Apache License, Version 2.0./' "$CFG"
   # Where is distributed outside the App Store: turn off the sandbox so it can
   # re-index the folders you chose after a restart, and allow the local
   # browser connection (127.0.0.1 only).
