@@ -22,9 +22,10 @@ contributor licence agreement (CLA) is required. Inbound = outbound.
 ## Decision records
 
 Significant technical choices are recorded as Architecture Decision Records (ADRs) in
-[`docs/adr/`](docs/adr/). Each ADR captures the context, the options considered and
-the reason for the choice made. If your pull request introduces a significant
-architectural change, add an ADR alongside it.
+[`docs/adr/`](docs/adr/) — see [ADR-0006](docs/adr/0006-open-source-apache-2.md) for
+the licence decision. Each ADR captures the context, the options considered and the
+reason for the choice made. If your pull request introduces a significant architectural
+change, add an ADR alongside it.
 
 ## Code of conduct
 

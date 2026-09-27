@@ -12,6 +12,7 @@
 3. [Flutter ↔ Rust through a JSON C ABI](adr/0003-flutter-ffi-json-boundary.md)
 4. [CLI binary is `where-cli`](adr/0004-cli-binary-name.md)
 5. [Browser bridge: paired, loopback-only HTTP](adr/0005-browser-bridge.md)
+6. [Open-source under the Apache License 2.0](adr/0006-open-source-apache-2.md)
 
 Also see [CHANGELOG](../CHANGELOG.md), [PRIVACY](../PRIVACY.md) and
 [SECURITY](../SECURITY.md).

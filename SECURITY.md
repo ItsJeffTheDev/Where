@@ -18,8 +18,8 @@ Where is pre-release. Only the latest version on `main` gets fixes.
 
 | Version | Supported |
 |---|---|
-| 0.2.x | ✅ |
-| < 0.2 | ❌ |
+| 0.7.x | ✅ |
+| < 0.7 | ❌ |
 
 ## What's in scope
 

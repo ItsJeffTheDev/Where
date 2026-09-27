@@ -72,6 +72,7 @@ secrets.*
 # --- Editors and operating systems -------------------------------------------
 .vscode/
 .idea/
+.claude/
 *.iml
 *.swp
 *.suo

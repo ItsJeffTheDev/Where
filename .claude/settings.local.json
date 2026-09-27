@@ -3,7 +3,10 @@
     "allow": [
       "mcp__claude_ai_Notion__notion-search",
       "mcp__claude_ai_Notion__notion-fetch",
-      "mcp__claude_ai_Notion__notion-query-data-sources"
+      "mcp__claude_ai_Notion__notion-query-data-sources",
+      "Bash(ls -la c:/Users/Commu/Downloads/where-source/*.bat c:/Users/Commu/Downloads/where-source/*.sh)",
+      "Read(//tmp/**)",
+      "mcp__claude_ai_Notion__notion-update-page"
     ]
   }
 }

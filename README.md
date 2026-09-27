@@ -9,7 +9,7 @@
 Your files, notes, tasks and projects, connected and searchable in one place.
 Local-first. Private by default. No account needed.
 
-[![Version](https://img.shields.io/badge/version-0.4.0_alpha-4F5BD5)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.7.0_alpha-4F5BD5)](CHANGELOG.md)
 [![CI](https://github.com/ItsJeffTheDev/Where/actions/workflows/ci.yml/badge.svg)](https://github.com/ItsJeffTheDev/Where/actions/workflows/ci.yml)
 ![Platform](https://img.shields.io/badge/platform-Windows_%7C_macOS_%7C_Linux-0078D6)
 ![Rust](https://img.shields.io/badge/core-Rust-B7410E)
@@ -113,13 +113,24 @@ If something goes wrong, the script shows the last lines of its log:
 `%LOCALAPPDATA%\where-tools\setup-log.txt` on Windows,
 `~/.where-tools/setup-log.txt` on Mac and Linux.
 
+### Developer builds (no setup, just build)
+
+If your toolchain is already installed and you only want the release files:
+
+| Your computer | Script |
+|---|---|
+| **Windows** | `build-windows.bat` → `dist\v<ver>\` portable zip + installer |
+| **Mac** | `bash build-macos.sh` → `dist/v<ver>/` dmg + zip |
+| **Linux** | `bash build-linux.sh` → `dist/v<ver>/` AppImage + deb + tar.gz |
+
 ### Publishing a release
 
 1. Write the notes in `docs/releases/vX.Y.Z.md` (first line `# Title` becomes
    the release name). Without a file, the CHANGELOG section is used.
-2. Push to `main`, then push a tag: `git tag -a vX.Y.Z -m "…"` and
+2. Bump the version in `Cargo.toml` (workspace) and `apps/where_flutter/pubspec.yaml`.
+3. Push to `main`, then push a tag: `git tag -a vX.Y.Z -m "…"` and
    `git push origin vX.Y.Z`.
-3. GitHub builds the Windows, Mac and Linux downloads on its own machines and
+4. GitHub builds the Windows, Mac and Linux downloads on its own machines and
    publishes the Release. See
    [`.github/workflows/release.yml`](.github/workflows/release.yml).
 
@@ -188,13 +199,14 @@ apps/where_flutter ──dart:ffi──► where_ffi ──► where_search ─�
 | `crates/where_ffi/` | The bridge between the app and the engine |
 | `crates/where_cli/` | Command-line tool |
 | `browser-extension/` | Save pages from Chrome, Edge or Brave |
-| `scripts/` | Packaging for Mac and Linux (used by `start-where.sh` and releases) |
+| `scripts/` | Packaging for Mac/Linux (`package.sh`), Windows release helper (`make-release.ps1`) |
+| `build-windows.bat` / `build-macos.sh` / `build-linux.sh` | Developer build scripts — produce release files without setup steps |
 | `installer/` | Windows installer (Inno Setup) |
 | `docs/` | [Product spec](docs/SPEC.md) and [architecture decisions](docs/adr/) |
 
 ## Status
 
-**v0.4.0 — alpha.** Windows, Mac and Linux, with installers. See the [changelog](CHANGELOG.md).
+**v0.7.0 — alpha.** Windows, Mac and Linux, with installers. See the [changelog](CHANGELOG.md).
 
 | Spec §38 question | Status |
 |---|---|
@@ -202,10 +214,10 @@ apps/where_flutter ──dart:ffi──► where_ffi ──► where_search ─�
 | Can it store objects locally? | ✅ |
 | Can it search them quickly? | ✅ sub-millisecond on small sets |
 | Can objects be connected? | ✅ |
-| Can results be shown clearly and quickly? | 🟡 desktop app built; first Windows build in progress |
+| Can results be shown clearly and quickly? | ✅ desktop app ships on all three platforms |
 
-**Next up:** a green Windows build in CI, a search speed benchmark, a global
-Ctrl+Space shortcut, and linking notes to files and people. Later: sync,
+**Next up:** search speed benchmark (100k objects, p95 < 50 ms), global
+Ctrl+Space shortcut, linking notes to files and people. Later: sync,
 integrations (GitHub, Google Drive, calendar), optional AI search, plugins.
 
 ## Principles
@@ -231,6 +243,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Work is planned in Notion
 |---|---|
 | [CHANGELOG.md](CHANGELOG.md) | What changed in each version |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to help, and keeping private files out of the repo |
+| [GOVERNANCE.md](GOVERNANCE.md) | Maintainers, contribution licensing, ADR policy, release process |
 | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | How we treat each other |
 | [SECURITY.md](SECURITY.md) | Reporting vulnerabilities privately |
 | [PRIVACY.md](PRIVACY.md) | What Where stores and what it never does |
@@ -239,6 +252,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Work is planned in Notion
 
 ## License
 
-No license has been chosen yet, so all rights are reserved by the author.
-You're welcome to read the code and suggest changes; please ask before
-reusing it elsewhere.
+[Apache License, Version 2.0](LICENSE). Contributions are welcome under the
+same licence — no CLA required. See [GOVERNANCE.md](GOVERNANCE.md) for the
+full contribution and governance model.
