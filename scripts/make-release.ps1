@@ -2,17 +2,23 @@
   Where - publish a GitHub Release from files you've already built.
 
   Run it through make-release.bat (double-click), or:
-    powershell -ExecutionPolicy Bypass -File scripts\make-release.ps1 [-Version 0.4.0] [-Fetch] [-Draft] [-Yes]
+    powershell -ExecutionPolicy Bypass -File scripts\make-release.ps1 [-Version 0.7.0] [-Fetch] [-Draft] [-Yes]
+
+  Build the release files first:
+    Windows:  build-windows.bat       (or start-where.bat for setup + build)
+    Mac:      bash build-macos.sh     (run on a Mac)
+    Linux:    bash build-linux.sh     (run on a Linux machine)
+  Then drop the Mac/Linux files into release-files\ before running this.
 
   What it does
     1. Works out the version (from Cargo.toml unless you pass -Version).
     2. Checks the GitHub CLI (installs it with winget if missing, then signs in).
     3. Gathers the release files into dist\v<version>\ :
          - Windows: portable zip (+ installer if Inno Setup is available) from the
-           app built by start-where.bat
+           app built by build-windows.bat or start-where.bat
          - the browser extension zip
          - anything you put in release-files\  (e.g. Mac .dmg, Linux .AppImage/.deb
-           built on those computers)
+           built with build-macos.sh / build-linux.sh on those computers)
          - with -Fetch: the Mac and Linux files GitHub already built for this tag
     4. Reads the notes from docs\releases\v<version>.md (or release-notes-v<version>.md).
        The first "# Title" line becomes the release title.
@@ -102,7 +108,7 @@ if (Test-Path (Join-Path $WinOut 'Where.exe')) {
     try { Copy-Item $src $WinOut -Force -ErrorAction Stop }
     catch { Warn "Couldn't update $name (in use?) - using the copy already next to Where.exe." }
   }
-  if (-not (Test-Path (Join-Path $WinOut 'where_ffi.dll'))) { Fail "where_ffi.dll is missing next to Where.exe. Run start-where.bat first." }
+  if (-not (Test-Path (Join-Path $WinOut 'where_ffi.dll'))) { Fail "where_ffi.dll is missing next to Where.exe. Run build-windows.bat (or start-where.bat) first." }
   # Microsoft C++ runtime, so Where starts on PCs without the redistributable.
   foreach ($dll in 'msvcp140.dll', 'vcruntime140.dll', 'vcruntime140_1.dll') {
     $src = Join-Path $env:WINDIR "System32\$dll"
@@ -141,7 +147,7 @@ if (Test-Path (Join-Path $WinOut 'Where.exe')) {
     Warn "Skipping the installer (Inno Setup not installed)."
   }
 } else {
-  Warn "No Windows build found - run start-where.bat first to include Windows files."
+  Warn "No Windows build found - run build-windows.bat (or start-where.bat) first to include Windows files."
 }
 
 # Browser extension

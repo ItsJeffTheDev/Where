@@ -10,6 +10,8 @@
 #  installs anything missing: build tools, Rust and Flutter.
 #  On Windows, use start-where.bat instead.
 #  Detailed output goes to ~/.where-tools/setup-log.txt
+#
+#  To build release files without the setup steps: build-macos.sh / build-linux.sh
 # ==========================================================================
 set -uo pipefail
 

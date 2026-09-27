@@ -369,8 +369,11 @@ echo   %C_HEAD%start-where.bat%C_END%           set up if needed, build, and ope
 echo   %C_HEAD%start-where.bat update%C_END%    get the latest code first, then build and open
 echo   %C_HEAD%start-where.bat cli%C_END%       open the command-line version
 echo.
-echo   Missing tools - Git, C++ Build Tools, Rust, Flutter - install automatically.
+echo   Missing tools ^(Git, C++ Build Tools, Rust, Flutter^) install automatically.
 echo   Details are logged to %LOG%
+echo.
+echo   To build release files without the setup steps:  build-windows.bat
+echo   To publish a release to GitHub:                  make-release.bat
 goto :done
 
 :fail

@@ -3,12 +3,17 @@ rem ==========================================================================
 rem  Where - make a GitHub Release from files you've already built
 rem
 rem    make-release.bat              version from Cargo.toml
-rem    make-release.bat 0.4.0        a specific version
-rem    make-release.bat -Fetch       also add the Mac/Linux files GitHub built
+rem    make-release.bat 0.7.0        a specific version
+rem    make-release.bat -Fetch       also pull the Mac/Linux files GitHub built
 rem    make-release.bat -Draft       publish as a draft you can review first
 rem
-rem  Put files built on other computers (Mac .dmg, Linux .AppImage/.deb/...)
-rem  in the release-files folder and they are attached too.
+rem  Build the files first, then run this:
+rem    Windows:  build-windows.bat          (or start-where.bat)
+rem    Mac:      bash build-macos.sh        (on a Mac)
+rem    Linux:    bash build-linux.sh        (on a Linux machine)
+rem
+rem  Drop Mac/Linux files built elsewhere into the release-files\ folder —
+rem  they get attached automatically (or use -Fetch to pull GitHub's CI build).
 rem  Notes come from docs\releases\v<version>.md (first "# line" = title).
 rem ==========================================================================
 setlocal
